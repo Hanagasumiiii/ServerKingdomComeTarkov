@@ -8,11 +8,16 @@
 *.so
 *.dylib
 
+# Goland settings
+.idea
+
 # Test binary, built with `go test -c`
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+*.prof
+coverage.out
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
@@ -23,3 +28,26 @@ go.work.sum
 
 # env file
 .env
+
+# Logs
+*.log
+
+# Database dumps
+*.sql
+*.sqlite
+*.db
+
+# Editors and IDEs temporary files
+*~
+*.swp
+*.swo
+*.tmp
+
+# Docker settings
+docker-compose.override.yml
+
+# Generated Ent files
+ent/ent.go
+ent/entc.go
+ent/entql.go
+ent/schema/*_easyjson.go
