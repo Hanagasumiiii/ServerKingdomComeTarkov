@@ -1,4 +1,4 @@
-package ServerKingdomComeTarkov
+package logging
 
 import (
 	"log"
