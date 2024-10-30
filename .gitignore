@@ -47,7 +47,7 @@ go.work.sum
 docker-compose.override.yml
 
 # Generated Ent files
-ent/ent.go
-ent/entc.go
-ent/entql.go
-ent/schema/*_easyjson.go
+ent/*
+!ent/schema
+!ent/schema/*
+!ent/generate.go
