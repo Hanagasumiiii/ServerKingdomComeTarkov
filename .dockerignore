@@ -1,0 +1,7 @@
+*.log
+*.tmp
+/build/
+pkg/
+node_modules/
+.git/
+.env

@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  reg:
+    build: .
+    container_name: reg
+    depends_on:
+      - postgres
+    environment:
+      - postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
+  auth:
+    build: .
+    container_name: reg
+    depends_on:
+      - postgres
+    environment:
+
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
