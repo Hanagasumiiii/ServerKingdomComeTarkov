@@ -37,7 +37,7 @@ func main() {
 		auth.LoginUser(c, client)
 	})
 
-	if err = router.Run(":8080"); err != nil {
+	if err = router.Run(":8081"); err != nil {
 		logging.Logger.Fatalf("failed starting server: %v", err)
 	}
 }

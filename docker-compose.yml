@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres_db
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -13,26 +12,38 @@ services:
       - "5432:5432"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   reg:
-    build: .
-    container_name: reg
+    build:
+      context: .
+      dockerfile: reg/Dockerfile
     depends_on:
       - postgres
     environment:
-      - postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
     ports:
       - "8080:8080"
     networks:
       - backend
 
   auth:
-    build: .
-    container_name: reg
+    build:
+      context: .
+      dockerfile: auth/Dockerfile
     depends_on:
       - postgres
     environment:
-
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
 
 volumes:
   postgres_data:
