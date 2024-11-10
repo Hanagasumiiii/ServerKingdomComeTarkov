@@ -1,13 +1,13 @@
-package auth
+package main
 
 import (
 	"context"
 	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/ent"
-	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/logging"
-	"os"
-
+	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/pkg/auth"
+	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/pkg/logging"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	"os"
 )
 
 func main() {

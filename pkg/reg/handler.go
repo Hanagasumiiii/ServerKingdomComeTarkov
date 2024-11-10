@@ -3,8 +3,8 @@ package reg
 import (
 	"context"
 	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/ent"
-	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/ent/schema/user"
-	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/logging"
+	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/ent/user"
+	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/pkg/logging"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"

@@ -1,15 +1,18 @@
 FROM golang:1.23.3-alpine AS builder
 
+RUN apk update && apk add --no-cache git
+RUN go install entgo.io/ent/cmd/ent@latest
+
 WORKDIR /app
 
-COPY go.mod ./
+COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
 RUN go generate ./ent
 
-RUN go build -o auth_service ./auth/main.go
+RUN go build -o auth_service ./cmd/auth/main.go
 
 FROM alpine:3.20.3
 

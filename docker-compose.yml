@@ -21,7 +21,7 @@ services:
   reg:
     build:
       context: .
-      dockerfile: reg/Dockerfile
+      dockerfile: cmd/reg/Dockerfile
     depends_on:
       - postgres
     environment:
@@ -34,7 +34,7 @@ services:
   auth:
     build:
       context: .
-      dockerfile: auth/Dockerfile
+      dockerfile: cmd/auth/Dockerfile
     depends_on:
       - postgres
     environment:

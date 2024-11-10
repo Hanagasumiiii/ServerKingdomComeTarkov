@@ -1,11 +1,14 @@
 FROM golang:1.23.3-alpine AS builder
 
+RUN apk update && apk add --no-cache git
+RUN go install entgo.io/ent/cmd/ent@latest
+
 WORKDIR /app
 
 COPY go.mod ./
 RUN go mod download
 
-COPY . .
+COPY ../../reg .
 
 RUN go generate ./ent
 
