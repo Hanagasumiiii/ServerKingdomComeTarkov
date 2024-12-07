@@ -28,7 +28,7 @@ func main() {
 	}(client)
 
 	// Миграция схемы базы данных (только при первом запуске или при изменениях)
-	if err := client.Schema.Create(nil); err != nil {
+	if err := client.Schema.Create(context.Background()); err != nil {
 		logging.Logger.Fatalf("failed creating schema resources: %v", err)
 	}
 
