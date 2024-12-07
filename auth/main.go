@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/ent"
 	"github.com/Hanagasumiiii/ServerKingdomComeTarkov/logging"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -35,6 +36,29 @@ func main() {
 
 	router.POST("/login", func(c *gin.Context) {
 		auth.LoginUser(c, client)
+	})
+
+	router.GET("/verify", func(c *gin.Context) {
+		tokenString := c.GetHeader("Authorization")
+		if tokenString == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
+			return
+		}
+
+		// Проверка токена через redisclient
+		redisClientURL := os.Getenv("REDISCLIENT_URL")
+		if redisClientURL == "" {
+			redisClientURL = "http://localhost:8081"
+		}
+
+		getTokenURL := redisClientURL + "/get/" + tokenString
+		resp, err := http.Get(getTokenURL)
+		if err != nil || resp.StatusCode != http.StatusOK {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Token is valid"})
 	})
 
 	if err = router.Run(":8080"); err != nil {
